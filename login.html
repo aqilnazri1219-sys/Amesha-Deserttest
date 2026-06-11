@@ -3,8 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log Masuk & Daftar - Dessert Order System</title>
+    <title>Sistem Tempahan Pencuci Mulut</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Tambahan sikit susunan supaya kedua-dua borang duduk sebelah-sebelah */
+        body {
+            flex-direction: column;
+            height: auto;
+            padding: 40px 0;
+            gap: 30px;
+        }
+        @media (min-width: 768px) {
+            body {
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -16,10 +32,11 @@
                 <input type="password" id="login-password" placeholder="Kata Laluan" required>
                 <button type="submit">Masuk</button>
             </form>
-            <p>Belum ada akaun? <a href="#" id="go-to-register">Daftar Sini</a></p>
         </div>
+    </div>
 
-        <div id="register-form" class="form-box hidden">
+    <div class="auth-container">
+        <div id="register-form" class="form-box">
             <h2>Daftar Akaun Baru</h2>
             <form id="form-register">
                 <input type="text" id="reg-nama" placeholder="Nama Penuh" required>
@@ -37,7 +54,6 @@
 
                 <button type="submit">Daftar</button>
             </form>
-            <p>Dah ada akaun? <a href="#" id="go-to-login">Log Masuk Sini</a></p>
         </div>
     </div>
 
