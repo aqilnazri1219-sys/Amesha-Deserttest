@@ -3,89 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Tempahan Pencuci Mulut</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #fcefe9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .auth-container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-        h2 {
-            text-align: center;
-            color: #d65a31;
-            margin-bottom: 20px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        input, textarea, select {
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-        button {
-            background-color: #d65a31;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #b23b16;
-        }
-        p {
-            text-align: center;
-            font-size: 14px;
-            margin-top: 15px;
-        }
-        a {
-            color: #d65a31;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .hidden {
-            display: none;
-        }
-    </style>
+    <title>Log Masuk & Daftar - Dessert Order System</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="auth-container">
-        <div id="login-form">
+        <div id="login-form" class="form-box">
             <h2>Log Masuk</h2>
             <form id="form-login">
                 <input type="email" id="login-email" placeholder="E-mel" required>
                 <input type="password" id="login-password" placeholder="Kata Laluan" required>
                 <button type="submit">Masuk</button>
             </form>
-            <p>Belum ada akaun? <a id="go-to-register">Daftar Sini</a></p>
+            <p>Belum ada akaun? <a href="#" id="go-to-register">Daftar Sini</a></p>
         </div>
 
-        <div id="register-form" class="hidden">
+        <div id="register-form" class="form-box hidden">
             <h2>Daftar Akaun Baru</h2>
             <form id="form-register">
                 <input type="text" id="reg-nama" placeholder="Nama Penuh" required>
                 <input type="tel" id="reg-telefon" placeholder="Nombor Telefon" required>
                 <textarea id="reg-alamat" placeholder="Alamat Penghantaran" rows="3" required></textarea>
+                
                 <input type="email" id="reg-email" placeholder="E-mel" required>
                 <input type="password" id="reg-password" placeholder="Kata Laluan (Min 6 aksara)" required>
                 
@@ -97,113 +37,11 @@
 
                 <button type="submit">Daftar</button>
             </form>
-            <p>Dah ada akaun? <a id="go-to-login">Log Masuk Sini</a></p>
+            <p>Dah ada akaun? <a href="#" id="go-to-login">Log Masuk Sini</a></p>
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-
-    <script>
-        // Konfigurasi Firebase Projek Amsesha-Desert Anda
-        const firebaseConfig = {
-            apiKey: "AIzaSyBCHNfT0077WfsMYdecDp-B-oDuNx0797U",
-            authDomain: "amsesha-desert.firebaseapp.com",
-            projectId: "amsesha-desert",
-            storageBucket: "amsesha-desert.firebasestorage.app",
-            messagingSenderId: "1038794046646",
-            appId: "1:1038794046646:web:1bcd44821d20a577cd7a17"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // Logik Tukar Borang (Toggle UI)
-        const loginForm = document.getElementById('login-form');
-        const registerForm = document.getElementById('register-form');
-        const goToRegister = document.getElementById('go-to-register');
-        const goToLogin = document.getElementById('go-to-login');
-
-        goToRegister.addEventListener('click', () => {
-            loginForm.classList.add('hidden');
-            registerForm.classList.remove('hidden');
-        });
-
-        goToLogin.addEventListener('click', () => {
-            registerForm.classList.add('hidden');
-            loginForm.classList.remove('hidden');
-        });
-
-        // --- PROSES DAFTAR AKAUN ---
-        document.getElementById('form-register').addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const nama = document.getElementById('reg-nama').value;
-            const telefon = document.getElementById('reg-telefon').value;
-            const alamat = document.getElementById('reg-alamat').value;
-            const email = document.getElementById('reg-email').value;
-            const password = document.getElementById('reg-password').value;
-            const role = document.getElementById('reg-role').value;
-
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    
-                    // Simpan maklumat ke Firestore
-                    return db.collection("users").doc(user.uid).set({
-                        nama: nama,
-                        telefon: telefon,
-                        alamat: alamat,
-                        email: email,
-                        role: role,
-                        tarikhDaftar: new Date()
-                    });
-                })
-                .then(() => {
-                    alert("Pendaftaran berjaya! Sila log masuk.");
-                    document.getElementById('form-register').reset();
-                    goToLogin.click(); // Tukar balik ke skrin login
-                })
-                .catch((error) => {
-                    alert("Ralat Daftar: " + error.message);
-                });
-        });
-
-        // --- PROSES LOG MASUK ---
-        document.getElementById('form-login').addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-
-                    // Semak role dalam Firestore
-                    return db.collection("users").doc(user.uid).get();
-                })
-                .then((doc) => {
-                    if (doc.exists) {
-                        const userData = doc.data();
-                        if (userData.role === 'admin') {
-                            alert("Selamat datang Admin!");
-                            window.location.href = "admin.html";
-                        } else {
-                            alert("Selamat datang Pelanggan!");
-                            window.location.href = "customer.html";
-                        }
-                    } else {
-                        alert("Data pengguna tiada dalam database.");
-                    }
-                })
-                .catch((error) => {
-                    alert("Ralat Log Masuk: " + error.message);
-                });
-        });
-    </script>
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="auth.js"></script>
 </body>
 </html>
