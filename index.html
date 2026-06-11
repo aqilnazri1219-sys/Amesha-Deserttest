@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Masuk & Daftar - Dessert Order System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="auth-container">
+        <div id="login-form" class="form-box">
+            <h2>Log Masuk</h2>
+            <form id="form-login">
+                <input type="email" id="login-email" placeholder="E-mel" required>
+                <input type="password" id="login-password" placeholder="Kata Laluan" required>
+                <button type="submit">Masuk</button>
+            </form>
+            <p>Belum ada akaun? <a href="#" id="go-to-register">Daftar Sini</a></p>
+        </div>
+
+        <div id="register-form" class="form-box hidden">
+            <h2>Daftar Akaun Baru</h2>
+            <form id="form-register">
+                <input type="text" id="reg-nama" placeholder="Nama Penuh" required>
+                <input type="tel" id="reg-telefon" placeholder="Nombor Telefon" required>
+                <textarea id="reg-alamat" placeholder="Alamat Penghantaran" rows="3" required></textarea>
+                
+                <input type="email" id="reg-email" placeholder="E-mel" required>
+                <input type="password" id="reg-password" placeholder="Kata Laluan (Min 6 aksara)" required>
+                
+                <label for="reg-role">Daftar sebagai:</label>
+                <select id="reg-role">
+                    <option value="customer">Customer (Pelanggan)</option>
+                    <option value="admin">Admin (Pengurus)</option>
+                </select>
+
+                <button type="submit">Daftar</button>
+            </form>
+            <p>Dah ada akaun? <a href="#" id="go-to-login">Log Masuk Sini</a></p>
+        </div>
+    </div>
+
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="auth.js"></script>
+</body>
+</html>
