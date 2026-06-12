@@ -9,13 +9,13 @@ const goToRegister = document.getElementById('go-to-register');
 const goToLogin = document.getElementById('go-to-login');
 
 // Fungsi tukar paparan borang (Toggle UI)
-goToRegister.addEventListener('click', () => {
+goToRegister.addEventListener('click', (e) => {
     e.preventDefault();
     loginForm.classList.add('hidden');
     registerForm.classList.remove('hidden');
 });
 
-goToLogin.addEventListener('click', () => {
+goToLogin.addEventListener('click', (e) => {
     e.preventDefault();
     registerForm.classList.add('hidden');
     loginForm.classList.remove('hidden');
